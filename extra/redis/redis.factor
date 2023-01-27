@@ -99,6 +99,14 @@ IN: redis
 : redis-script-eval ( script keys args -- result ) script-eval flush read-response ;
 : redis-script-evalsha ( sha keys args -- result ) script-evalsha flush read-response ;
 
+! FT.SEARCH
+: redis-ft-search ( options query index -- result ) ft-search flush read-response ;
+: redis-ft-create ( options index -- ) ft-create flush check-response ;
+: redis-ft-dropindex ( options index -- ) ft-dropindex flush check-response ;
+
+! JSON
+: redis-json-set ( value path key -- ) json-set flush check-response ;
+
 ! Redis object
 TUPLE: redis host port encoding password ;
 

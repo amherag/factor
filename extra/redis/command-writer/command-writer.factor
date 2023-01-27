@@ -1,7 +1,7 @@
 ! Copyright (C) 2009 Bruno Deferrari
 ! See https://factorcode.org/license.txt for BSD license.
-USING: arrays assocs formatting kernel math math.parser
-sequences strings make ;
+USING: arrays assocs formatting kernel make math math.parser sequences splitting
+strings ;
 IN: redis.command-writer
 
 <PRIVATE
@@ -142,3 +142,13 @@ PRIVATE>
 : script-debug ( debug -- ) 1array { "SCRIPT" "DEBUG" } write-command-multi ;
 : script-evalsha ( sha keys args -- ) "EVALSHA" (script-eval) ;
 : script-eval ( script keys args -- ) "EVAL" (script-eval) ;
+
+! FT.SEARCH
+:: ft-search ( options query index -- )
+    options " " split reverse query suffix index suffix
+    "FT.SEARCH" write-command ;
+: ft-create ( options index -- ) 2array { "FT.CREATE" } write-command ;
+: ft-dropindex ( options index -- ) 2array { "FT.DROP" } write-command ;
+
+! JSON
+: json-set ( value path key -- ) 3array { "JSON.SET" } write-command ;
