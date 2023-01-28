@@ -1,7 +1,7 @@
 ! Copyright (C) 2009 Bruno Deferrari
 ! See https://factorcode.org/license.txt for BSD license.
 USING: arrays assocs formatting kernel make math math.parser sequences splitting
-strings ;
+strings json ;
 IN: redis.command-writer
 
 <PRIVATE
@@ -147,8 +147,8 @@ PRIVATE>
 :: ft-search ( options query index -- )
     options " " split reverse query suffix index suffix
     "FT.SEARCH" write-command ;
-: ft-create ( options index -- ) 2array { "FT.CREATE" } write-command ;
-: ft-dropindex ( options index -- ) 2array { "FT.DROP" } write-command ;
+: ft-create ( options index -- ) 2array "FT.CREATE" write-command ;
+: ft-dropindex ( options index -- ) 2array "FT.DROP" write-command ;
 
 ! JSON
-: json-set ( value path key -- ) 3array { "JSON.SET" } write-command ;
+: json-set ( value path key -- ) rot >json -rot 3array "JSON.SET" write-command ;
