@@ -147,8 +147,8 @@ PRIVATE>
 :: ft-search ( options query index -- )
     options " " split reverse query suffix index suffix
     "FT.SEARCH" write-command ;
-: ft-create ( options index -- ) 2array "FT.CREATE" write-command ;
-: ft-dropindex ( options index -- ) 2array "FT.DROP" write-command ;
+:: ft-create ( options index -- ) options " " split reverse index suffix "FT.CREATE" write-command ;
+:: ft-dropindex ( options index -- ) options " " split reverse index suffix "FT.DROP" write-command ;
 
 ! JSON
 : json-set ( value path key -- ) rot >json -rot 3array "JSON.SET" write-command ;
